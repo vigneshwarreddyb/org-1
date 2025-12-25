@@ -83,8 +83,8 @@ function Login({ onLogin, onNavigateToRegister }) {
 
           <div style={{marginTop: '30px', padding: '20px', background: '#1e2836', borderRadius: '12px'}}>
             <p style={{color: '#8a94a6', fontSize: '13px', marginBottom: '8px'}}>Demo Account:</p>
-            <p style={{color: '#8B7FFF', fontSize: '14px'}}>Email: 1223@example.com</p>
-            <p style={{color: '#8B7FFF', fontSize: '14px'}}>Password: demo1234</p>
+            <p style={{color: '#8B7FFF', fontSize: '14px'}}>Email: test@gmail.com</p>
+            <p style={{color: '#8B7FFF', fontSize: '14px'}}>Password: test</p>
           </div>
         </div>
       </div>

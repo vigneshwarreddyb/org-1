@@ -6,22 +6,22 @@ import StepTwo from './components/StepTwo';
 import StepThree from './components/StepThree';
 import StepFour from './components/StepFour';
 
-const GaneshKing = {
-  email: "ganesh.1234@gmail.com",
-  password: "ganesh1234",
-  username: "Ganesh1122",
-  companyName: "Ganesh Company p.Ltd",
-  firstName: "ganesh",
-  lastName: "king",
+const testuser = {
+  email: "test@gmail.com",
+  password: "test",
+  username: "Vicky",
+  companyName: "Mahender  Company p.Ltd",
+  firstName: "vigneshwar",
+  lastName: "reddy",
   mobile: "1234567890",
   residencePincode: "508114",
   companyPincode: "508115",
-  gstn: "ganesh1258",
+  gstn: "HIKPR9381GJSDJ2",
   companyAddress: "3-120, Hyderabad",
   city: "Hyderabad",
   state: "Telangana",
 
-  cardHolderName: "Ganesh king",
+  cardHolderName: " Vigneshwar Reddy",
   cardNumber: "1234567890987654",
   expiryDate: "12/25",
   cvv: "123",
@@ -34,7 +34,7 @@ const GaneshKing = {
 function App() {
   const [currentPage, setCurrentPage] = useState('login');
   const [currentStep, setCurrentStep] = useState(1);
-  const [registeredUsers, setRegisteredUsers] = useState([GaneshKing]);
+  const [registeredUsers, setRegisteredUsers] = useState([testuser]);
   const [currentUser, setCurrentUser] = useState(null);
 
   const [formData, setFormData] = useState({
