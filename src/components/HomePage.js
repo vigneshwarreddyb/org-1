@@ -12,30 +12,18 @@ function HomePage({ user, onLogout }) {
 
       <div className="home-content">
         <div className="welcome-banner">
-          <h2>Welcome, {user.firstName} {user.lastName}! 👋</h2>
+          <h2>Welcome, {user.authorised_person_name}! 👋</h2>
           <p>Your account has been successfully created and verified</p>
         </div>
 
         <div className="info-cards">
           <div className="info-card">
             <h3>🔐 Account Information</h3>
-            <div className="info-item">
+            {/* <div className="info-item">
               <span className="info-label">Username</span>
               <span className="info-value">{user.authorised_person_name}</span>
-            </div>
-            <div className="info-item">
-              <span className="info-label">Email</span>
-              <span className="info-value">{user.email}</span>
-            </div>
-            <div className="info-item">
-              <span className="info-label">Company Name</span>
-              <span className="info-value">{user.organisation_name}</span>
-            </div>
-          </div>
-
-          <div className="info-card">
-            <h3>👤 Personal Details</h3>
-            <div className="info-item">
+            </div> */}
+             <div className="info-item">
               <span className="info-label">Full Name</span>
               <span className="info-value">{user.authorised_person_name}</span>
             </div>
@@ -44,30 +32,36 @@ function HomePage({ user, onLogout }) {
               <span className="info-value">{user.user_mobile}</span>
             </div>
             <div className="info-item">
+              <span className="info-label">Email</span>
+              <span className="info-value">{user.user_email}</span>
+            </div>
+          
+          </div>
+
+          {/* <div className="info-card">
+            <h3>👤 Personal Details</h3>
+           
+            {/* <div className="info-item">
               <span className="info-label">Residence Pincode</span>
               <span className="info-value">{user.pincode}</span>
-            </div>
-          </div>
+            </div> *
+          </div> */}
 
           <div className="info-card">
             <h3>🏢 Organization Details</h3>
+              <div className="info-item">
+              <span className="info-label">Organisation Name</span>
+              <span className="info-value">{user.organisation_name}</span>
+            </div>
             <div className="info-item">
               <span className="info-label">GSTN</span>
               <span className="info-value">{user.gst_number}</span>
             </div>
             <div className="info-item">
-              <span className="info-label">Company Pincode</span>
-              <span className="info-value">{user.p}</span>
-            </div>
-            <div className="info-item">
               <span className="info-label">Company Address</span>
-              <span className="info-value">{user.companyAddress}</span>
+              <span className="info-value">{user.address}</span>
             </div>
-          </div>
-
-          <div className="info-card">
-            <h3>📍 Location Details</h3>
-            <div className="info-item">
+             <div className="info-item">
               <span className="info-label">City</span>
               <span className="info-value">{user.city}</span>
             </div>
@@ -75,7 +69,16 @@ function HomePage({ user, onLogout }) {
               <span className="info-label">State</span>
               <span className="info-value">{user.state}</span>
             </div>
+              <div className="info-item">
+              <span className="info-label">Company Pincode</span>
+              <span className="info-value">{user.pincode}</span>
+            </div>
           </div>
+
+          {/* <div className="info-card">
+            <h3>📍 Location Details</h3>
+           
+          </div> */}
 {/* 
           <div className="info-card">
             <h3>💳 Billing Information</h3>

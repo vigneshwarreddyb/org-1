@@ -6,7 +6,7 @@ import HomePage from "./components/HomePage";
 import StepOne from "./components/StepOne";
 import StepTwo from "./components/StepTwo";
 
-const api = "http://localhost:8000/api";
+const api = "https://kyc.infyss.com/api";
 
 function App() {
   const [currentPage, setCurrentPage] = useState("login");
@@ -87,7 +87,7 @@ function App() {
       };
 
       await axios.post(
-        "http://localhost:8000/api/auth/register/",
+        api+"/auth/register/",
         payload
       );
 
