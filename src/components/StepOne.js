@@ -11,7 +11,7 @@ function StepOne({ formData, setFormData, onNext, onNavigateToLogin }) {
       ...prev,
       [name]: value
     }));
-    
+
     if (errors[name]) {
       setErrors(prev => ({
         ...prev,
@@ -22,10 +22,10 @@ function StepOne({ formData, setFormData, onNext, onNavigateToLogin }) {
 
   const validate = () => {
     const newErrors = {};
+if (!formData.number || !formData.number.trim()) {
+  newErrors.number = 'Number is required';
+}
 
-    if (!formData.username.trim()) {
-      newErrors.username = 'Username is required';
-    }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!formData.email.trim()) {
@@ -65,8 +65,8 @@ function StepOne({ formData, setFormData, onNext, onNavigateToLogin }) {
       <div className="left-section">
         <div className="character-illustration">
           <div className="character-avatar"></div>
-          <h2 style={{fontSize: '28px', marginBottom: '10px'}}>Join Us Today</h2>
-          <p style={{color: '#8a94a6'}}>Create your account in just 3 steps</p>
+          <h2 style={{ fontSize: '28px', marginBottom: '10px' }}>Join Us Today</h2>
+          <p style={{ color: '#8a94a6' }}>Create your account in just 3 steps</p>
         </div>
       </div>
 
@@ -86,13 +86,7 @@ function StepOne({ formData, setFormData, onNext, onNavigateToLogin }) {
               <p>Enter Information</p>
             </div>
           </div>
-          <div className="step">
-            <div className="step-icon">📋</div>
-            <div className="step-info">
-              <h3>Billing</h3>
-              <p>Payment Details</p>
-            </div>
-          </div>
+         
         </div>
 
         <div className="form-container">
@@ -101,16 +95,17 @@ function StepOne({ formData, setFormData, onNext, onNavigateToLogin }) {
 
           <div className="form-row">
             <div className="form-group">
-              <label className="form-label">Username</label>
+              <label className="form-label">Mobile</label>
               <input
-                type="text"
-                name="username"
+                type="phone"
+                name="number"
                 className="form-input"
-                placeholder="Admin"
-                value={formData.username}
+                placeholder="9876543210"
+                value={formData.number}
                 onChange={handleChange}
               />
-              {errors.username && <div className="error-message">{errors.username}</div>}
+              {errors.number && <div className="error-message">{errors.number}</div>}
+
             </div>
 
             <div className="form-group">
@@ -139,7 +134,7 @@ function StepOne({ formData, setFormData, onNext, onNavigateToLogin }) {
                   value={formData.password}
                   onChange={handleChange}
                 />
-                <span 
+                <span
                   className="password-toggle"
                   onClick={() => setShowPassword(!showPassword)}
                 >
@@ -160,7 +155,7 @@ function StepOne({ formData, setFormData, onNext, onNavigateToLogin }) {
                   value={formData.confirmPassword}
                   onChange={handleChange}
                 />
-                <span 
+                <span
                   className="password-toggle"
                   onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                 >

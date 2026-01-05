@@ -1,18 +1,27 @@
 import React, { useState } from 'react';
 
 function Login({ onLogin, onNavigateToRegister }) {
-  const [email, setEmail] = useState('');
+  const [mobile, setmobile] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const result = onLogin(email, password);
-    
-    if (!result.success) {
-      setError(result.error);
+    setError("");
+
+    if (mobile.length !== 10) {
+      setError("Enter valid 10 digit mobile number");
+      return;
     }
+
+
+     try {
+      const result = await onLogin(mobile, password);
+      if (!result.success) setError(result.error);
+    } catch {
+      setError("Server error. Try again.");
+    }
+    
   };
 
   return (
@@ -36,13 +45,15 @@ function Login({ onLogin, onNavigateToRegister }) {
 
           <form onSubmit={handleSubmit}>
             <div className="form-group">
-              <label className="form-label">Email</label>
+              <label className="form-label">Mobile</label>
               <input
-                type="email"
+                type="tel"
                 className="form-input"
-                placeholder="Enter your email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                pattern="[0-9]*"
+                inputMode="numeric"
+                placeholder="Enter your mobile number"
+                value={mobile}
+                onChange={(e) => setmobile(e.target.value)}
                 required
               />
             </div>
@@ -81,11 +92,11 @@ function Login({ onLogin, onNavigateToRegister }) {
             Don't have an account? <a onClick={onNavigateToRegister}>Sign Up</a>
           </div>
 
-          <div style={{marginTop: '30px', padding: '20px', background: '#1e2836', borderRadius: '12px'}}>
+          {/* <div style={{marginTop: '30px', padding: '20px', background: '#1e2836', borderRadius: '12px'}}>
             <p style={{color: '#8a94a6', fontSize: '13px', marginBottom: '8px'}}>Demo Account:</p>
-            <p style={{color: '#8B7FFF', fontSize: '14px'}}>Email: test@gmail.com</p>
+            <p style={{color: '#8B7FFF', fontSize: '14px'}}>number: 123456789</p>
             <p style={{color: '#8B7FFF', fontSize: '14px'}}>Password: test</p>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

@@ -18,7 +18,7 @@ function StepTwo({ formData, setFormData, onNext, onPrevious }) {
       ...prev,
       [name]: value
     }));
-    
+
     if (errors[name]) {
       setErrors(prev => ({
         ...prev,
@@ -29,20 +29,15 @@ function StepTwo({ formData, setFormData, onNext, onPrevious }) {
 
   const validate = () => {
     const newErrors = {};
+if (!formData.name || !formData.name.trim()) {
+  newErrors.name = 'Name is required';
+}
 
-    if (!formData.firstName.trim()) {
-      newErrors.firstName = 'First name is required';
-    }
+if (!formData.organizationName || !formData.organizationName.trim()) {
+  newErrors.organizationName = 'Organisation name is required';
+}
 
-    if (!formData.lastName.trim()) {
-      newErrors.lastName = 'Last name is required';
-    }
-
-    if (!formData.mobile) {
-      newErrors.mobile = 'Mobile number is required';
-    } else if (!/^\d{10}$/.test(formData.mobile)) {
-      newErrors.mobile = 'Mobile number must be 10 digits';
-    }
+   
 
     if (!formData.residencePincode) {
       newErrors.residencePincode = 'Residence pincode is required';
@@ -83,8 +78,8 @@ function StepTwo({ formData, setFormData, onNext, onPrevious }) {
       <div className="left-section">
         <div className="character-illustration">
           <div className="character-avatar"></div>
-          <h2 style={{fontSize: '28px', marginBottom: '10px'}}>Join Us Today</h2>
-          <p style={{color: '#8a94a6'}}>Create your account in just 3 steps</p>
+          <h2 style={{ fontSize: '28px', marginBottom: '10px' }}>Join Us Today</h2>
+          <p style={{ color: '#8a94a6' }}>Create your account in just 3 steps</p>
         </div>
       </div>
 
@@ -104,13 +99,7 @@ function StepTwo({ formData, setFormData, onNext, onPrevious }) {
               <p>Enter Information</p>
             </div>
           </div>
-          <div className="step">
-            <div className="step-icon">📋</div>
-            <div className="step-info">
-              <h3>Billing</h3>
-              <p>Payment Details</p>
-            </div>
-          </div>
+         
         </div>
 
         <div className="form-container">
@@ -119,45 +108,35 @@ function StepTwo({ formData, setFormData, onNext, onPrevious }) {
 
           <div className="form-row">
             <div className="form-group">
-              <label className="form-label">First Name</label>
+              <label className="form-label">Name</label>
               <input
                 type="text"
-                name="firstName"
+                name="name"
                 className="form-input"
-                placeholder="firstname"
-                value={formData.firstName}
+                placeholder="Full Name"
+                value={formData.name}
                 onChange={handleChange}
               />
-              {errors.firstName && <div className="error-message">{errors.firstName}</div>}
-            </div>
-
-            <div className="form-group">
-              <label className="form-label">Last Name</label>
-              <input
-                type="text"
-                name="lastName"
-                className="form-input"
-                placeholder="lastname"
-                value={formData.lastName}
-                onChange={handleChange}
-              />
-              {errors.lastName && <div className="error-message">{errors.lastName}</div>}
+              {errors.name && <div className="error-message">{errors.name}</div>}
             </div>
           </div>
 
           <div className="form-row">
             <div className="form-group">
-              <label className="form-label">Mobile</label>
+              <label className="form-label">Organisation Name</label>
               <input
-                type="tel"
-                name="mobile"
+                type="text"
+                name="organizationName"
                 className="form-input"
-                placeholder="1234567890"
-                value={formData.mobile}
+                placeholder="Organisation Name"
+                value={formData.organizationName}
                 onChange={handleChange}
               />
-              {errors.mobile && <div className="error-message">{errors.mobile}</div>}
+              {errors.organizationName && (
+                <div className="error-message">{errors.organizationName}</div>
+              )}
             </div>
+
 
             <div className="form-group">
               <label className="form-label">Residence Pincode</label>

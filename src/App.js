@@ -1,195 +1,139 @@
-import React, { useState } from 'react';
-import Login from './components/Login';
-import HomePage from './components/HomePage';
-import StepOne from './components/StepOne';
-import StepTwo from './components/StepTwo';
-import StepThree from './components/StepThree';
-import StepFour from './components/StepFour';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
-const testuser = {
-  email: "test@gmail.com",
-  password: "test",
-  username: "Vicky",
-  companyName: "Mahender  Company p.Ltd",
-  firstName: "vigneshwar",
-  lastName: "reddy",
-  mobile: "1234567890",
-  residencePincode: "508114",
-  companyPincode: "508115",
-  gstn: "HIKPR9381GJSDJ2",
-  companyAddress: "3-120, Hyderabad",
-  city: "Hyderabad",
-  state: "Telangana",
+import Login from "./components/Login";
+import HomePage from "./components/HomePage";
+import StepOne from "./components/StepOne";
+import StepTwo from "./components/StepTwo";
 
-  cardHolderName: " Vigneshwar Reddy",
-  cardNumber: "1234567890987654",
-  expiryDate: "12/25",
-  cvv: "123",
-  billingAddress: "3-120, Hyderabad",
-  billingCity: "Hyderabad",
-  billingState: "Telangana",
-  billingPincode: "500070"
-};
+const api = "http://localhost:8000/api";
 
 function App() {
-  const [currentPage, setCurrentPage] = useState('login');
+  const [currentPage, setCurrentPage] = useState("login");
   const [currentStep, setCurrentStep] = useState(1);
-  const [registeredUsers, setRegisteredUsers] = useState([testuser]);
   const [currentUser, setCurrentUser] = useState(null);
 
   const [formData, setFormData] = useState({
-    username: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
-    companyName: '',
-    firstName: '',
-    lastName: '',
-    mobile: '',
-    residencePincode: '',
-    companyPincode: '',
-    gstn: '',
-    companyAddress: '',
-    city: '',
-    state: 'Telangana',
-
-    cardHolderName: '',
-    cardNumber: '',
-    expiryDate: '',
-    cvv: '',
-    billingAddress: '',
-    billingCity: '',
-    billingState: 'Telangana',
-    billingPincode: ''
+    number: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    companyName: "",
+    name: "",
+    organizationName: "",
+    gstn: "",
+    companyAddress: "",
+    companyPincode: "",
+    city: "",
+    state: ""
   });
 
-  const handleLogin = (email, password) => {
-    const user = registeredUsers.find(
-      u => u.email === email && u.password === password
-    );
+  // 🔁 Auto-login
+  useEffect(() => {
+    const token = localStorage.getItem("access");
+    if (!token) return;
 
-    if (user) {
-      setCurrentUser(user);
-      setCurrentPage('home');
-      return { success: true };
-    } else {
-      return { success: false, error: 'Invalid email or password' };
-    }
-  };
-
-  const handleLogout = () => {
-    setCurrentUser(null);
-    setCurrentPage('login');
-  };
-
-  const handleRegistrationComplete = (userData) => {
-    setRegisteredUsers(prev => [...prev, userData]);
-    setCurrentUser(userData);
-    setCurrentPage('home');
-
-    setFormData({
-      username: '',
-      email: '',
-      password: '',
-      confirmPassword: '',
-      companyName: '',
-      firstName: '',
-      lastName: '',
-      mobile: '',
-      residencePincode: '',
-      companyPincode: '',
-      gstn: '',
-      companyAddress: '',
-      city: '',
-      state: 'Telangana',
-      cardHolderName: '',
-      cardNumber: '',
-      expiryDate: '',
-      cvv: '',
-      billingAddress: '',
-      billingCity: '',
-      billingState: 'Telangana',
-      billingPincode: ''
+    axios.get(api + "/auth/me/", {
+      headers: { Authorization: `Bearer ${token}` }
+    })
+    .then(res => {
+      setCurrentUser(res.data.data);
+      setCurrentPage("home");
+    })
+    .catch(() => {
+      localStorage.clear();
+      setCurrentPage("login");
     });
-    setCurrentStep(1);
+  }, []);
 
-    console.log('Registration Successful!', userData);
-  };
+  // 🔐 LOGIN
+  const handleLogin = async (mobile, password) => {
+    try {
+      const res = await axios.post(api + "/auth/login/", { mobile, password });
 
-  const navigateToRegister = () => {
-    setCurrentPage('register');
-    setCurrentStep(1);
-  };
+      localStorage.setItem("access", res.data.tokens.access);
+      localStorage.setItem("refresh", res.data.tokens.refresh);
 
-  const navigateToLogin = () => {
-    setCurrentPage('login');
-  };
+      const profile = await axios.get(api + "/auth/me/", {
+        headers: { Authorization: `Bearer ${res.data.tokens.access}` }
+      });
 
-  if (currentPage === 'login') {
-    return (
-      <Login
-        onLogin={handleLogin}
-        onNavigateToRegister={navigateToRegister}
-      />
-    );
-  }
+      setCurrentUser(profile.data.data);
+      setCurrentPage("home");
 
-  if (currentPage === 'home') {
-    return (
-      <HomePage
-        user={currentUser}
-        onLogout={handleLogout}
-      />
-    );
-  }
-
-
-  if (currentPage === 'register') {
-    if (currentStep === 1) {
-      return (
-        <StepOne
-          formData={formData}
-          setFormData={setFormData}
-          onNext={() => setCurrentStep(2)}
-          onNavigateToLogin={navigateToLogin}
-        />
-      );
+      return { success: true };
+    } catch {
+      return { success: false, error: "Invalid mobile or password" };
     }
+  };
+   const handleRegistrationComplete = async () => {
+    try {
+      // ✅ Backend payload mapping
+      const payload = {
+        mobile: formData.number,
+        email: formData.email,
+        password: formData.password,
 
-    if (currentStep === 2) {
-      return (
-        <StepTwo
-          formData={formData}
-          setFormData={setFormData}
-          onNext={() => setCurrentStep(3)}
+        organisation_name: formData.organizationName,
+        gst_number: formData.gstn,
+        authorised_person_name: formData.name,
+
+        address: formData.companyAddress,
+        city: formData.city,
+        state: formData.state,
+        pincode: formData.companyPincode,
+
+        disclaimer_accepted: true
+      };
+
+      await axios.post(
+        "http://localhost:8000/api/auth/register/",
+        payload
+      );
+
+      alert("Registration successful. Please login.");
+      setCurrentPage("login");
+      setCurrentStep(1);
+
+    } catch (err) {
+      console.error(err.response?.data);
+      alert(JSON.stringify(err.response?.data || "Registration failed"));
+    }
+  };
+
+
+  // 🚪 LOGOUT
+  const handleLogout = () => {
+    localStorage.clear();
+    setCurrentUser(null);
+    setCurrentPage("login");
+  };
+
+  return (
+    <>
+      {currentPage === "login" && (
+        <Login onLogin={handleLogin} onNavigateToRegister={() => {
+          setCurrentPage("register");
+          setCurrentStep(1);
+        }} />
+      )}
+
+      {currentPage === "home" && (
+        <HomePage user={currentUser} onLogout={handleLogout} />
+      )}
+
+      {currentPage === "register" && currentStep === 1 && (
+        <StepOne formData={formData} setFormData={setFormData} onNext={() => setCurrentStep(2)} />
+      )}
+
+      {currentPage === "register" && currentStep === 2 && (
+        <StepTwo formData={formData} setFormData={setFormData}
+          onNext={handleRegistrationComplete}
           onPrevious={() => setCurrentStep(1)}
         />
-      );
-    }
-
-    if (currentStep === 3) {
-      return (
-        <StepThree
-          formData={formData}
-          setFormData={setFormData}
-          onNext={() => setCurrentStep(4)}
-          onPrevious={() => setCurrentStep(2)}
-        />
-      );
-    }
-
-    if (currentStep === 4) {
-      return (
-        <StepFour
-          formData={formData}
-          onComplete={handleRegistrationComplete}
-          onPrevious={() => setCurrentStep(3)}
-        />
-      );
-    }
-  }
-
-  return null;
+      )}
+    </>
+  );
 }
 
 export default App;

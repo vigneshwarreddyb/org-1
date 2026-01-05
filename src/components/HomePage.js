@@ -21,7 +21,7 @@ function HomePage({ user, onLogout }) {
             <h3>🔐 Account Information</h3>
             <div className="info-item">
               <span className="info-label">Username</span>
-              <span className="info-value">{user.username}</span>
+              <span className="info-value">{user.authorised_person_name}</span>
             </div>
             <div className="info-item">
               <span className="info-label">Email</span>
@@ -29,7 +29,7 @@ function HomePage({ user, onLogout }) {
             </div>
             <div className="info-item">
               <span className="info-label">Company Name</span>
-              <span className="info-value">{user.companyName}</span>
+              <span className="info-value">{user.organisation_name}</span>
             </div>
           </div>
 
@@ -37,15 +37,15 @@ function HomePage({ user, onLogout }) {
             <h3>👤 Personal Details</h3>
             <div className="info-item">
               <span className="info-label">Full Name</span>
-              <span className="info-value">{user.firstName} {user.lastName}</span>
+              <span className="info-value">{user.authorised_person_name}</span>
             </div>
             <div className="info-item">
               <span className="info-label">Mobile</span>
-              <span className="info-value">{user.mobile}</span>
+              <span className="info-value">{user.user_mobile}</span>
             </div>
             <div className="info-item">
               <span className="info-label">Residence Pincode</span>
-              <span className="info-value">{user.residencePincode}</span>
+              <span className="info-value">{user.pincode}</span>
             </div>
           </div>
 
@@ -53,11 +53,11 @@ function HomePage({ user, onLogout }) {
             <h3>🏢 Organization Details</h3>
             <div className="info-item">
               <span className="info-label">GSTN</span>
-              <span className="info-value">{user.gstn}</span>
+              <span className="info-value">{user.gst_number}</span>
             </div>
             <div className="info-item">
               <span className="info-label">Company Pincode</span>
-              <span className="info-value">{user.companyPincode}</span>
+              <span className="info-value">{user.p}</span>
             </div>
             <div className="info-item">
               <span className="info-label">Company Address</span>
@@ -76,17 +76,17 @@ function HomePage({ user, onLogout }) {
               <span className="info-value">{user.state}</span>
             </div>
           </div>
-
+{/* 
           <div className="info-card">
             <h3>💳 Billing Information</h3>
             <div className="info-item">
               <span className="info-label">Card Holder</span>
               <span className="info-value">{user.cardHolderName}</span>
             </div>
-            <div className="info-item">
+            {/* <div className="info-item">
               <span className="info-label">Card Number</span>
               <span className="info-value">**** **** **** {user.cardNumber.slice(-4)}</span>
-            </div>
+            </div> 
             <div className="info-item">
               <span className="info-label">Expiry Date</span>
               <span className="info-value">{user.expiryDate}</span>
@@ -111,7 +111,7 @@ function HomePage({ user, onLogout }) {
               <span className="info-label">Pincode</span>
               <span className="info-value">{user.billingPincode}</span>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>
