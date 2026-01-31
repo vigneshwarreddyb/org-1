@@ -5,6 +5,7 @@ import Login from "./components/Login";
 import HomePage from "./components/HomePage";
 import StepOne from "./components/StepOne";
 import StepTwo from "./components/StepTwo";
+import SearchPage from "./components/SearchPage";
 
 const api = "https://kyc.infyss.com/api";
 
@@ -36,14 +37,14 @@ function App() {
     axios.get(api + "/auth/me/", {
       headers: { Authorization: `Bearer ${token}` }
     })
-    .then(res => {
-      setCurrentUser(res.data.data);
-      setCurrentPage("home");
-    })
-    .catch(() => {
-      localStorage.clear();
-      setCurrentPage("login");
-    });
+      .then(res => {
+        setCurrentUser(res.data.data);
+        setCurrentPage("home");
+      })
+      .catch(() => {
+        localStorage.clear();
+        setCurrentPage("login");
+      });
   }, []);
 
   // 🔐 LOGIN
@@ -66,7 +67,7 @@ function App() {
       return { success: false, error: "Invalid mobile or password" };
     }
   };
-   const handleRegistrationComplete = async () => {
+  const handleRegistrationComplete = async () => {
     try {
       // ✅ Backend payload mapping
       const payload = {
@@ -87,7 +88,7 @@ function App() {
       };
 
       await axios.post(
-        api+"/auth/register/",
+        api + "/auth/register/",
         payload
       );
 
@@ -108,6 +109,13 @@ function App() {
     setCurrentUser(null);
     setCurrentPage("login");
   };
+// 🔍 NAVIGATE TO SEARCH PAGE
+  useEffect(() => {
+  const goSearch = () => setCurrentPage("search");
+  window.addEventListener("go-search", goSearch);
+  return () => window.removeEventListener("go-search", goSearch);
+}, []);
+
 
   return (
     <>
@@ -124,6 +132,10 @@ function App() {
 
       {currentPage === "register" && currentStep === 1 && (
         <StepOne formData={formData} setFormData={setFormData} onNext={() => setCurrentStep(2)} />
+      )}
+
+      {currentPage === "search" && (
+        <SearchPage onBack={() => setCurrentPage("home")} />
       )}
 
       {currentPage === "register" && currentStep === 2 && (

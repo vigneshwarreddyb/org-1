@@ -5,6 +5,12 @@ function HomePage({ user, onLogout }) {
     <div className="home-container">
       <div className="navbar">
         <h1>Registration Portal</h1>
+        <button
+          className="logout-btn"
+          onClick={() => window.dispatchEvent(new Event("go-search"))}
+        >
+          Search
+        </button>
         <button className="logout-btn" onClick={onLogout}>
           Logout
         </button>
@@ -23,7 +29,7 @@ function HomePage({ user, onLogout }) {
               <span className="info-label">Username</span>
               <span className="info-value">{user.authorised_person_name}</span>
             </div> */}
-             <div className="info-item">
+            <div className="info-item">
               <span className="info-label">Full Name</span>
               <span className="info-value">{user.authorised_person_name}</span>
             </div>
@@ -35,7 +41,7 @@ function HomePage({ user, onLogout }) {
               <span className="info-label">Email</span>
               <span className="info-value">{user.user_email}</span>
             </div>
-          
+
           </div>
 
           {/* <div className="info-card">
@@ -49,7 +55,7 @@ function HomePage({ user, onLogout }) {
 
           <div className="info-card">
             <h3>🏢 Organization Details</h3>
-              <div className="info-item">
+            <div className="info-item">
               <span className="info-label">Organisation Name</span>
               <span className="info-value">{user.organisation_name}</span>
             </div>
@@ -61,7 +67,7 @@ function HomePage({ user, onLogout }) {
               <span className="info-label">Company Address</span>
               <span className="info-value">{user.address}</span>
             </div>
-             <div className="info-item">
+            <div className="info-item">
               <span className="info-label">City</span>
               <span className="info-value">{user.city}</span>
             </div>
@@ -69,7 +75,7 @@ function HomePage({ user, onLogout }) {
               <span className="info-label">State</span>
               <span className="info-value">{user.state}</span>
             </div>
-              <div className="info-item">
+            <div className="info-item">
               <span className="info-label">Company Pincode</span>
               <span className="info-value">{user.pincode}</span>
             </div>
@@ -79,7 +85,7 @@ function HomePage({ user, onLogout }) {
             <h3>📍 Location Details</h3>
            
           </div> */}
-{/* 
+          {/* 
           <div className="info-card">
             <h3>💳 Billing Information</h3>
             <div className="info-item">

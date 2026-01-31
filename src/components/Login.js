@@ -8,7 +8,7 @@ function Login({ onLogin, onNavigateToRegister }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
-
+    
     if (mobile.length !== 10) {
       setError("Enter valid 10 digit mobile number");
       return;
